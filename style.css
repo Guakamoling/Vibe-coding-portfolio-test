@@ -1,0 +1,304 @@
+/* Generic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #0c0c0c;
+    --text-color: #f0f0f0;
+    --accent-color: #ffffff;
+    --secondary-bg: #1a1a1a;
+    --font-main: 'Inter', sans-serif;
+    --font-heading: 'Archivo Black', sans-serif;
+    --transition-fast: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    --transition-slow: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Grain Overlay Effect */
+.grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+}
+
+/* Custom Cursor */
+.cursor {
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    transition: transform var(--transition-fast);
+}
+
+.cursor.hovered {
+    transform: translate(-50%, -50%) scale(4);
+}
+
+/* Hero Header & Mega Menu */
+.hero-header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 5%;
+    position: relative;
+}
+
+.intro-box {
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--text-color);
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    background-color: var(--bg-color);
+}
+
+.mega-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.menu-item {
+    position: relative;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.title-text {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 8vw, 6rem); /* Reduced further to fit 3 items easily */
+    line-height: 1.2;
+    color: rgba(240, 240, 240, 0.3); 
+    transition: color var(--transition-slow), transform var(--transition-fast);
+    -webkit-text-stroke: 1px rgba(240, 240, 240, 0.4);
+    text-transform: uppercase;
+    font-style: italic;
+    display: inline-block; /* Ensure transform works correctly */
+    transform: skewX(-12deg); /* More aggressive slant */
+}
+
+.menu-item:hover .title-text {
+    color: var(--accent-color);
+    -webkit-text-stroke: 1px transparent;
+    transform: translateX(30px) skewX(-12deg);
+}
+
+/* Transforming Hover Effect: Speech Bubbles */
+.speech-bubble {
+    position: absolute;
+    top: -10px; /* Overlap more with the menu text */
+    left: -40px; /* Move further left to ensure it's visible if text is large */
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    padding: 0.8rem 1.2rem;
+    border-radius: 30px 30px 30px 0;
+    width: 260px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) rotate(-3deg);
+    transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+    pointer-events: none;
+    z-index: 1000; /* Higher z-index to stay on top */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+.speech-bubble p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.menu-item:hover .speech-bubble {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) rotate(0);
+}
+
+.bubble-tail {
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+}
+
+/* Content Sections */
+.content-section {
+    padding: 12rem 5%;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.section-dark { background-color: #080808; }
+.section-light { background-color: #ffffff; color: #000; }
+.section-darker { background-color: #000000; }
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.section-label {
+    font-family: var(--font-heading);
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin-bottom: 4rem;
+    text-transform: uppercase;
+}
+
+.large-p {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    line-height: 1.4;
+    margin-bottom: 4rem;
+}
+
+.bio-grid, .philosophy-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.strength-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    gap: 3rem;
+}
+
+.card {
+    border-top: 1px solid currentColor;
+    padding-top: 2rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-num {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.card-icon {
+    width: 28px;
+    height: 28px;
+    stroke: var(--bg-color);
+}
+
+.card h3, .bio-item h3, .phil-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.philosophy-quote {
+    margin-bottom: 6rem;
+}
+
+blockquote {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-style: italic;
+    line-height: 1.2;
+}
+
+/* Footer */
+.main-footer {
+    padding: 10rem 5% 5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5rem;
+}
+
+.footer-logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.footer-bottom {
+    opacity: 0.3;
+    font-size: 0.8rem;
+}
+
+/* Responsive Support */
+@media (max-width: 1024px) {
+    .speech-bubble {
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin-top: 1rem;
+        border-radius: 20px;
+        transform: none !important;
+    }
+    
+    .bubble-tail { display: none; }
+}
+
+@media (max-width: 600px) {
+    .hero-header { padding: 3rem 5%; }
+    .title-text { font-size: clamp(3rem, 15vw, 4.5rem); }
+    .section-title { font-size: 2.5rem; }
+    .footer-top { flex-direction: column; align-items: flex-start; gap: 3rem; }
+}
