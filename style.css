@@ -18,6 +18,8 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -25,6 +27,7 @@ body {
     color: var(--text-color);
     font-family: var(--font-main);
     overflow-x: hidden;
+    width: 100%;
     line-height: 1.6;
 }
 
@@ -105,6 +108,8 @@ body {
     font-style: italic;
     display: inline-block; /* Ensure transform works correctly */
     transform: skewX(-12deg); /* More aggressive slant */
+    word-break: break-word; /* Prevent long words from overflowing on mobile */
+    max-width: 100%; /* Ensure it does not exceed container */
 }
 
 .menu-item:hover .title-text {
@@ -193,7 +198,7 @@ body {
 
 .bio-grid, .philosophy-details {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: 3rem;
 }
 
@@ -298,7 +303,7 @@ blockquote {
 
 @media (max-width: 600px) {
     .hero-header { padding: 3rem 5%; }
-    .title-text { font-size: clamp(3rem, 15vw, 4.5rem); }
-    .section-title { font-size: 2.5rem; }
+    .title-text { font-size: clamp(1.8rem, 10vw, 3.5rem); }
+    .section-title { font-size: 2.5rem; word-break: break-word; }
     .footer-top { flex-direction: column; align-items: flex-start; gap: 3rem; }
 }
